@@ -1,0 +1,22 @@
+{
+  "name": "velysend",
+  "version": "1.0.0",
+  "description": "application desktop interne permettant à Velyorix d’envoyer des emails personnalisés et stylisés via un SMTP",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuketsuSh/VelySend.git"
+  },
+  "author": "Yuketsu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YuketsuSh/VelySend/issues"
+  },
+  "homepage": "https://github.com/YuketsuSh/VelySend#readme",
+  "devDependencies": {
+    "electron": "^33.1.0"
+  }
+}
