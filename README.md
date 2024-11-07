@@ -34,7 +34,7 @@ VelySend est une application desktop multiplateforme (Windows, macOS, Linux) dé
 1. **Cloner le dépôt** :
 
    ```bash
-   git clone https://github.com/username/velysend.git
+   git clone https://github.com/YuketsuSh/velysend.git
    cd velysend
    ```
 
