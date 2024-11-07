@@ -23,6 +23,8 @@
     "files": [
       "main.js",
       "renderer.js",
+      "preload.js",
+      "assets/**",
       "index.html",
       "styles.css",
       "node_modules/**"
