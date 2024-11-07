@@ -18,7 +18,7 @@ function loadSmtpConfigs() {
 }
 
 function saveSmtpConfig(config) {
-    config.password = bcrypt.hashSync(config.password, 10);
+    // Suppression du chiffrement temporairement
     const configs = loadSmtpConfigs();
     configs.push(config);
     fs.writeFileSync(smtpConfigPath, JSON.stringify(configs, null, 2));
@@ -37,10 +37,15 @@ function getSmtpConfigByName(name) {
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 700,
+        frame: false,
+        titleBarStyle: 'hidden',
+        resizable: false,
+        minimizable: true,
+        maximizable: false,
         webPreferences: {
-            preload: path.resolve(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             enableRemoteModule: false,
             nodeIntegration: false
@@ -48,7 +53,9 @@ function createWindow() {
     });
 
     mainWindow.loadFile('index.html');
-    mainWindow.webContents.openDevTools();
+
+    ipcMain.on('minimize-window', () => mainWindow.minimize());
+    ipcMain.on('close-window', () => mainWindow.close());
 }
 
 ipcMain.handle('load-smtp-configs', () => loadSmtpConfigs());

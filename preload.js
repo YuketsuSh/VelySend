@@ -6,3 +6,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     deleteSmtpConfig: (accountName) => ipcRenderer.invoke('delete-smtp-config', accountName),
     sendEmail: (emailData) => ipcRenderer.invoke('send-email', emailData)
 });
+
+// Événements pour les boutons de la fenêtre
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('minimize-btn').addEventListener('click', () => {
+        ipcRenderer.send('minimize-window');
+    });
+
+    document.getElementById('close-btn').addEventListener('click', () => {
+        ipcRenderer.send('close-window');
+    });
+});

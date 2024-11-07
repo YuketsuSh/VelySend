@@ -1,41 +1,87 @@
+/* Corps principal */
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     margin: 0;
+    height: 100vh;
+    overflow: hidden;
 }
 
+/* Conteneur principal */
 #app {
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
+    padding: 25px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
-    width: 80%;
-    max-width: 600px;
-    text-align: center;
+    width: 90%;
+    max-width: 1200px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: #fff;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
-h1 {
-    font-size: 2em;
-    margin: 0;
-    color: #ffffff;
+/* Boutons de contrôle fixés */
+.window-controls {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
 }
 
-.form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-label {
-    display: block;
+.control-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
     font-weight: bold;
-    color: #fff;
+    transition: color 0.3s;
 }
 
+.control-btn.minimize:hover {
+    color: #a5a5a5;
+}
+
+.control-btn.close:hover {
+    color: #ff5f5f;
+}
+
+/* Style des éléments de formulaire */
+.field {
+    width: 100%;
+    max-width: 550px;
+    margin-bottom: 15px;
+}
+
+/* Aligner les champs sur une ligne pour Destinataire et Sujet */
+.field-row {
+    display: flex;
+    gap: 15px;
+}
+
+.field-row .field {
+    flex: 1;
+}
+
+/* Style pour les labels */
+label {
+    font-weight: bold;
+    color: #ddd;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Champs de saisie et autres éléments du formulaire */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -44,42 +90,41 @@ select,
 .dropzone,
 .tox-tinymce {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+    padding: 12px;
     border: none;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
     backdrop-filter: blur(10px);
+    font-size: 1em;
+    box-sizing: border-box;
 }
 
+/* Style des boutons */
 button {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #3b82f6;
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 12px;
     border-radius: 8px;
     cursor: pointer;
-    margin: 5px;
-    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
 }
 
 button:hover {
-    background-color: rgba(255, 255, 255, 0.5);
-    transform: scale(1.05);
+    background-color: #2563eb;
 }
 
-#email-preview {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-}
-
-/* TinyMCE styling */
+/* TinyMCE styling - ajustement pour plus de confort d'édition */
 .tox-tinymce {
     background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 10px;
+    border-radius: 8px;
+    margin-top: 5px;
+    height: 300px !important; /* Hauteur augmentée pour plus de confort */
 }
 
 .tox .tox-toolbar,
@@ -87,6 +132,7 @@ button:hover {
     background: rgba(255, 255, 255, 0.1) !important;
     color: #fff;
     border: none;
+    height: 40px; /* Augmente la hauteur pour plus de confort dans la barre d'outils */
 }
 
 .tox .tox-toolbar__primary {
@@ -101,6 +147,8 @@ button:hover {
     color: #fff;
     padding: 20px;
     text-align: center;
+    box-sizing: border-box;
+    margin-top: 10px;
 }
 
 .dropzone .dz-message {
@@ -108,7 +156,50 @@ button:hover {
     color: #fff;
 }
 
+/* Classe cachée */
 .hidden {
     display: none !important;
 }
 
+/* Scrollbar personnalisée */
+#app::-webkit-scrollbar {
+    width: 8px;
+}
+
+#app::-webkit-scrollbar-thumb {
+    background-color: #3b82f6;
+    border-radius: 4px;
+}
+
+#app {
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 transparent;
+}
+
+/* Responsivité pour petits écrans */
+@media (max-width: 1200px), (max-height: 700px) {
+    #app {
+        padding: 15px;
+        max-height: 95vh;
+    }
+
+    .title {
+        font-size: 1.8em;
+    }
+
+    .field,
+    button {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+
+    /* Réduit la hauteur de TinyMCE et Dropzone sur petits écrans */
+    .tox-tinymce {
+        height: 200px !important;
+    }
+
+    .dropzone {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+}

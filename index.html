@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
-    <script src="https://cdn.tiny.cloud/1/gqsyll5b5xddmg9blp1h6i27e56ntb06o1tzzb2cbkd80jfd/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="assets/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#email-body',
@@ -16,12 +16,19 @@
             toolbar: 'bold italic underline | alignleft aligncenter alignright | bullist numlist | link image table | code',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             valid_elements: '*[*]',
-            extended_valid_elements: '*[*]'
+            extended_valid_elements: '*[*]',
+            license_key: 'gpl|gqsyll5b5xddmg9blp1h6i27e56ntb06o1tzzb2cbkd80jfd'
         });
     </script>
 </head>
 <body>
-<div id="app" class="container mt-5">
+
+<div class="window-controls">
+    <button id="minimize-btn" class="control-btn minimize">_</button>
+    <button id="close-btn" class="control-btn close">✕</button>
+</div>
+
+<div id="app" class="container">
     <h1 class="title has-text-centered">VelySend</h1>
 
     <!-- Configuration SMTP -->
@@ -68,13 +75,15 @@
             <button id="delete-smtp-btn" class="button is-danger is-small mt-2">Supprimer le compte</button>
             <button id="add-smtp-btn" class="button is-info is-small mt-2">Ajouter un compte</button>
         </div>
-        <div class="field">
-            <label class="label">Destinataire</label>
-            <input id="email-to" class="input" type="email" placeholder="exemple@domaine.com">
-        </div>
-        <div class="field">
-            <label class="label">Sujet</label>
-            <input id="email-subject" class="input" type="text" placeholder="Sujet de l'email">
+        <div class="field-group">
+            <div class="field">
+                <label class="label">Destinataire</label>
+                <input id="email-to" class="input" type="email" placeholder="exemple@domaine.com">
+            </div>
+            <div class="field">
+                <label class="label">Sujet</label>
+                <input id="email-subject" class="input" type="text" placeholder="Sujet de l'email">
+            </div>
         </div>
         <div class="field">
             <label class="label">Contenu</label>

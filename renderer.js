@@ -10,9 +10,11 @@ window.addEventListener('DOMContentLoaded', () => {
         if (smtpConfigs.length === 0) {
             // Aucun compte configuré : afficher le formulaire de création de compte SMTP et masquer l'interface d'envoi
             showSmtpConfig();
+            document.getElementById('delete-smtp-btn').classList.add('hidden'); // Masquer le bouton de suppression
         } else {
             // Au moins un compte configuré : afficher l'interface d'envoi et masquer le formulaire de création de compte SMTP
             showEmailSend();
+
             // Remplir le menu déroulant avec les comptes existants
             smtpConfigs.forEach(config => {
                 const option = document.createElement('option');
@@ -20,6 +22,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 option.textContent = config.name;
                 smtpAccountSelect.appendChild(option);
             });
+
+            document.getElementById('delete-smtp-btn').classList.add('hidden'); // Masquer par défaut
         }
     }
 
@@ -36,6 +40,16 @@ window.addEventListener('DOMContentLoaded', () => {
     // Afficher le formulaire pour ajouter un nouveau compte SMTP lorsque le bouton est cliqué
     document.getElementById('add-smtp-btn').addEventListener('click', () => {
         showSmtpConfig();
+    });
+
+    // Affichage conditionnel du bouton de suppression en fonction de la sélection de compte SMTP
+    document.getElementById('smtp-account').addEventListener('change', () => {
+        const selectedAccount = document.getElementById('smtp-account').value;
+        if (selectedAccount !== 'Sélectionnez un compte SMTP') {
+            document.getElementById('delete-smtp-btn').classList.remove('hidden');
+        } else {
+            document.getElementById('delete-smtp-btn').classList.add('hidden');
+        }
     });
 
     // Supprimer le compte SMTP sélectionné et recharger l'affichage en fonction des comptes restants
@@ -62,4 +76,23 @@ window.addEventListener('DOMContentLoaded', () => {
         alert("Configuration SMTP enregistrée !");
         loadSmtpConfigs(); // Recharge la liste après enregistrement et bascule l'affichage
     });
+
+    // Envoi de l'email lorsque le bouton Envoyer est cliqué
+    document.getElementById('send-btn').addEventListener('click', async () => {
+        const emailData = {
+            smtpName: document.getElementById('smtp-account').value,
+            to: document.getElementById('email-to').value,
+            subject: document.getElementById('email-subject').value,
+            body: tinymce.get("email-body").getContent(),
+            attachments: Array.from(dropzone.files).map(file => ({ path: file.path })),
+        };
+
+        try {
+            await window.electronAPI.sendEmail(emailData);
+            alert("E-mail envoyé avec succès !");
+        } catch (error) {
+            alert("Erreur lors de l'envoi de l'e-mail : " + error.message);
+        }
+    });
 });
+
