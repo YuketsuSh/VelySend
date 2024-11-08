@@ -112,11 +112,28 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('nav-config-smtp').addEventListener('click', () => showSection('config-smtp'));
 
     document.getElementById('send-btn').addEventListener('click', async () => {
+        // Convertir les fichiers en base64
+        const attachments = await Promise.all(
+            dropzone.getAcceptedFiles().map(file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    resolve({
+                        filename: file.name,
+                        content: reader.result.split(',')[1],
+                        encoding: 'base64'
+                    });
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            }))
+        );
+
         const emailData = {
             smtpName: document.getElementById('smtp-account').value,
             to: document.getElementById('email-to').value,
             subject: document.getElementById('email-subject').value,
             body: tinymce.get('email-body').getContent(),
+            attachments
         };
 
         try {

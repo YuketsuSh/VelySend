@@ -153,6 +153,7 @@ ipcMain.handle('send-email', async (event, emailData) => {
         to: emailData.to,
         subject: emailData.subject,
         html: emailData.body,
+        attachments: emailData.attachments // Ajout des pièces jointes encodées
     };
 
     try {
