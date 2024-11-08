@@ -16,10 +16,10 @@
             toolbar: 'bold italic underline | alignleft aligncenter alignright | bullist numlist | link image table | code',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
             valid_elements: '*[*]',
-            extended_valid_elements: '*[*]',
-            license_key: 'gpl|gqsyll5b5xddmg9blp1h6i27e56ntb06o1tzzb2cbkd80jfd'
+            extended_valid_elements: '*[*]'
         });
     </script>
+
 </head>
 <body>
 
@@ -29,73 +29,120 @@
 </div>
 
 <div id="app" class="container">
-    <h1 class="title has-text-centered">VelySend</h1>
-
-    <!-- Configuration SMTP -->
-    <div id="smtp-config" class="box hidden">
-        <h2 class="subtitle">Configurer un Compte SMTP</h2>
-        <div class="field">
-            <label class="label">Nom du compte</label>
-            <input id="smtp-name" class="input" type="text" placeholder="Nom du compte SMTP">
-        </div>
-        <div class="field">
-            <label class="label">Serveur SMTP</label>
-            <input id="smtp-server" class="input" type="text" placeholder="smtp.example.com">
-        </div>
-        <div class="field">
-            <label class="label">Port</label>
-            <input id="smtp-port" class="input" type="number" placeholder="587">
-        </div>
-        <div class="field">
-            <label class="label">Nom d'utilisateur</label>
-            <input id="smtp-username" class="input" type="text" placeholder="Votre nom d'utilisateur SMTP">
-        </div>
-        <div class="field">
-            <label class="label">Mot de passe</label>
-            <input id="smtp-password" class="input" type="password" placeholder="Mot de passe SMTP">
-        </div>
-        <div class="field">
-            <label class="checkbox">
-                <input id="smtp-ssl" type="checkbox"> SSL/TLS
-            </label>
-        </div>
-        <button id="save-smtp-btn" class="button is-primary">Enregistrer</button>
+    <div class="sidebar">
+        <button id="nav-home" class="button is-link">Accueil</button>
+        <button id="nav-send-email" class="button is-link">Envoyer un Email</button>
+        <button id="nav-history" class="button is-link">Historique des envois</button>
+        <button id="nav-config-smtp" class="button is-link">Configuration SMTP</button>
     </div>
 
-    <!-- Interface d'envoi d'email -->
-    <div id="email-send" class="box hidden">
-        <h2 class="subtitle">Envoyer un Email</h2>
-        <div class="field">
-            <label class="label">Compte SMTP</label>
-            <div class="select">
-                <select id="smtp-account">
-                    <option>Sélectionnez un compte SMTP</option>
-                </select>
+    <div id="content">
+        <!-- Section Accueil -->
+        <section id="home" class="hidden">
+            <h1 class="title has-text-centered">Bienvenue sur VelySend</h1>
+            <div id="smtp-warning" class="notification is-warning hidden">
+                <button id="close-warning-btn" class="delete"></button>
+                Vous n'avez pas encore de compte SMTP configuré. Allez dans "Configuration SMTP" pour en ajouter un.
             </div>
-            <button id="delete-smtp-btn" class="button is-danger is-small mt-2">Supprimer le compte</button>
-            <button id="add-smtp-btn" class="button is-info is-small mt-2">Ajouter un compte</button>
-        </div>
-        <div class="field-group">
-            <div class="field">
-                <label class="label">Destinataire</label>
-                <input id="email-to" class="input" type="email" placeholder="exemple@domaine.com">
+            <div class="box">
+                <h2 class="subtitle">Statistiques</h2>
+                <div class="columns is-multiline">
+                    <div class="column is-half has-text-centered">
+                        <p><strong>Emails envoyés</strong></p>
+                        <p id="email-count">0</p>
+                    </div>
+                    <div class="column is-half has-text-centered">
+                        <p><strong>Comptes SMTP</strong></p>
+                        <p id="smtp-count">0</p>
+                    </div>
+                </div>
             </div>
-            <div class="field">
-                <label class="label">Sujet</label>
-                <input id="email-subject" class="input" type="text" placeholder="Sujet de l'email">
+        </section>
+
+
+        <!-- Section Envoi d'Email -->
+        <section id="send-email" class="hidden">
+            <div class="box">
+                <h2 class="subtitle">Envoyer un Email</h2>
+                <div class="field">
+                    <label class="label">Compte SMTP</label>
+                    <div class="select">
+                        <select id="smtp-account">
+                            <option>Sélectionnez un compte SMTP</option>
+                        </select>
+                    </div>
+                    <button id="delete-smtp-btn" class="button is-danger is-small mt-2">Supprimer le compte</button>
+                </div>
+                <div class="field-group">
+                    <div class="field">
+                        <label class="label">Destinataire</label>
+                        <input id="email-to" class="input" type="email" placeholder="exemple@domaine.com">
+                    </div>
+                    <div class="field">
+                        <label class="label">Sujet</label>
+                        <input id="email-subject" class="input" type="text" placeholder="Sujet de l'email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Contenu</label>
+                    <textarea id="email-body" class="textarea"></textarea>
+                </div>
+                <div class="field">
+                    <label class="label">Pièces jointes</label>
+                    <form action="/" class="dropzone" id="attachments"></form>
+                </div>
+                <button id="send-btn" class="button is-primary">Envoyer</button>
             </div>
-        </div>
-        <div class="field">
-            <label class="label">Contenu</label>
-            <textarea id="email-body" class="textarea"></textarea>
-        </div>
-        <div class="field">
-            <label class="label">Pièces jointes</label>
-            <form action="/" class="dropzone" id="attachments"></form>
-        </div>
-        <button id="send-btn" class="button is-primary">Envoyer</button>
+        </section>
+
+        <!-- Section Historique des Envois -->
+        <section id="history" class="hidden">
+            <div class="box">
+                <h2 class="subtitle">Historique des envois</h2>
+                <div id="history-container" class="table-container">
+                    <!-- Historique des emails sera chargé ici -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Configuration SMTP -->
+        <section id="config-smtp" class="hidden">
+            <div class="box">
+                <h2 class="subtitle">Configurer un Compte SMTP</h2>
+                <div class="field">
+                    <label class="label">Nom du compte</label>
+                    <input id="smtp-name" class="input" type="text" placeholder="Nom du compte SMTP">
+                </div>
+                <div class="field">
+                    <label class="label">Serveur SMTP</label>
+                    <input id="smtp-server" class="input" type="text" placeholder="smtp.example.com">
+                </div>
+                <div class="field">
+                    <label class="label">Port</label>
+                    <input id="smtp-port" class="input" type="number" placeholder="587">
+                </div>
+                <div class="field">
+                    <label class="label">Nom d'utilisateur</label>
+                    <input id="smtp-username" class="input" type="text" placeholder="Votre nom d'utilisateur SMTP">
+                </div>
+                <div class="field">
+                    <label class="label">Mot de passe</label>
+                    <input id="smtp-password" class="input" type="password" placeholder="Mot de passe SMTP">
+                </div>
+                <div class="field">
+                    <label class="checkbox">
+                        <input id="smtp-ssl" type="checkbox"> SSL/TLS
+                    </label>
+                </div>
+                <button id="save-smtp-btn" class="button is-primary">Enregistrer</button>
+            </div>
+        </section>
     </div>
 </div>
+
+<div id="notification-container"></div>
+
+
 <script src="renderer.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
 <script>

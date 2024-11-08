@@ -1,3 +1,5 @@
+::-webkit-scrollbar {         display: none;       }
+
 /* Corps principal */
 body {
     font-family: Arial, sans-serif;
@@ -27,7 +29,44 @@ body {
     overflow-y: auto;
 }
 
-/* Boutons de contrôle fixés */
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px 10px;
+    background: rgba(50, 60, 90, 0.8);
+    border-radius: 0 15px 15px 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar button {
+    background-color: #3b82f6;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: left;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.sidebar button:hover {
+    background-color: #2563eb;
+    transform: translateX(5px);
+}
+
+.sidebar button:active {
+    transform: translateX(8px);
+}
+
+
+/* Boutons de contrôle de la fenêtre */
 .window-controls {
     position: fixed;
     top: 10px;
@@ -119,12 +158,12 @@ button:hover {
     background-color: #2563eb;
 }
 
-/* TinyMCE styling - ajustement pour plus de confort d'édition */
+/* TinyMCE styling */
 .tox-tinymce {
     background: rgba(255, 255, 255, 0.1) !important;
     border-radius: 8px;
     margin-top: 5px;
-    height: 300px !important; /* Hauteur augmentée pour plus de confort */
+    height: 300px !important;
 }
 
 .tox .tox-toolbar,
@@ -132,7 +171,7 @@ button:hover {
     background: rgba(255, 255, 255, 0.1) !important;
     color: #fff;
     border: none;
-    height: 40px; /* Augmente la hauteur pour plus de confort dans la barre d'outils */
+    height: 40px;
 }
 
 .tox .tox-toolbar__primary {
@@ -176,6 +215,145 @@ button:hover {
     scrollbar-color: #3b82f6 transparent;
 }
 
+/* Styles pour la bulle de notification */
+.notification-bubble {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.notification-bubble.success {
+    background-color: #48c774;
+}
+
+.notification-bubble.error {
+    background-color: #f14668;
+}
+
+.notification-bubble.info {
+    background-color: #3273dc;
+}
+
+.notification-bubble.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Styles pour les statistiques de l'accueil */
+#home .box {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+#home .box h3 {
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    color: #ffd700;
+}
+
+#home .box p {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+#home .statistic-item {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#home .statistic-item p {
+    font-weight: bold;
+    color: #fff;
+}
+
+
+/* Styles pour le tableau de l'historique */
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.table th {
+    background-color: #2a5298;
+    color: #fff;
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.table .resend-btn {
+    padding: 5px 10px;
+    font-size: 0.8em;
+}
+
+/* Style pour la bulle d'information de configuration SMTP */
+#smtp-warning {
+    background: rgba(255, 215, 0, 0.2);
+    color: #fff;
+    font-size: 1em;
+    padding: 15px 10px;
+    margin-left: 25px;
+    border-left: 5px solid #ffd700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
+}
+
+#smtp-warning p {
+    margin: 0;
+    font-weight: 500;
+}
+
+#smtp-warning .delete {
+    background: none;
+    border: none;
+    color: #ffd700;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s;
+    top: -0.5rem;
+    right: 0rem;
+}
+
+#smtp-warning .delete:hover {
+    color: #ffea8a;
+}
+
+
 /* Responsivité pour petits écrans */
 @media (max-width: 1200px), (max-height: 700px) {
     #app {
@@ -193,7 +371,6 @@ button:hover {
         padding: 10px;
     }
 
-    /* Réduit la hauteur de TinyMCE et Dropzone sur petits écrans */
     .tox-tinymce {
         height: 200px !important;
     }

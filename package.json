@@ -1,6 +1,6 @@
 {
   "name": "velysend",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "application desktop interne permettant à Velyorix d’envoyer des emails personnalisés et stylisés via un SMTP",
   "main": "main.js",
   "scripts": {
@@ -33,7 +33,9 @@
       {
         "from": "assets/",
         "to": "assets",
-        "filter": ["**/*"]
+        "filter": [
+          "**/*"
+        ]
       }
     ],
     "win": {
@@ -41,7 +43,10 @@
       "icon": "assets/icon.ico"
     },
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "icon": "assets/icon.png"
     },
     "mac": {
@@ -56,6 +61,7 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "fs": "^0.0.1-security",
-    "nodemailer": "^6.9.16"
+    "nodemailer": "^6.9.16",
+    "sqlite3": "^5.1.7"
   }
 }
