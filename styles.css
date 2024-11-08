@@ -79,8 +79,9 @@ body {
     transform: translateX(5px);
 }
 
-.tox-tinymce-aux{
-    display: none !important;
+.tox-notifications-container {
+    z-index: 999 !important;
+    top: 18.6rem !important;
 }
 
 .sidebar button:active {
